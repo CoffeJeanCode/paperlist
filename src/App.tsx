@@ -16,18 +16,6 @@ function App() {
     id: "",
   });
 
-  useEffect(() => {
-    const timeout = setInterval(() => {
-      document.title =
-        document.title === "Paper List"
-          ? `${tasks.filter((task: Task) => task.isDone).length} tasks`
-          : "Paper List";
-    }, 5000);
-    return () => {
-      clearInterval(timeout);
-    };
-  }, []);
-
   const handleAddTasks = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     evt.persist();
