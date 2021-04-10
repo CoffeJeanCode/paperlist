@@ -1,0 +1,90 @@
+:root {
+  font-size: 18px;
+}
+body {
+  overflow: hidden;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+h2 {
+  font-size: 40px;
+}
+
+h3 {
+  font-size: 32px;
+}
+
+.container {
+  max-width: 600px;
+}
+
+.list__container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 2px solid rgb(240, 240, 240);
+}
+.task__count {
+  height: max-content;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input__container {
+  display: grid;
+  grid-template-columns: 1fr 0.2fr;
+}
+
+.tasks__container {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.tasks__container::-webkit-scrollbar {
+  width: 10px;
+}
+.tasks__container::-webkit-scrollbar-thumb {
+  background-color: none;
+  border: 1px solid rgb(175, 175, 175);
+}
+
+.task__item {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task__item input {
+  padding: 0;
+}
+
+.task__item label {
+  display: flex;
+  align-items: center;
+}
+
+.task__item span {
+  justify-self: flex-end;
+  margin: 0 1rem;
+}
+
+.task__item::before {
+  content: "";
+  display: none;
+}
