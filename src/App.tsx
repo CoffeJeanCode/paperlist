@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { createId } from "./utils/createId";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
@@ -15,6 +15,18 @@ function App() {
     isDone: false,
     id: "",
   });
+
+  useEffect(() => {
+    const timeout = setInterval(() => {
+      document.title =
+        document.title === "Paper List"
+          ? `${tasks.filter((task: Task) => task.isDone).length} tasks`
+          : "Paper List";
+    }, 5000);
+    return () => {
+      clearInterval(timeout);
+    };
+  }, []);
 
   const handleAddTasks = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
