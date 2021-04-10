@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-export const useLocalStorage = <T>(key: string, initialValue: T) => {
+export const useLocalStorage = <T>(
+  key: string,
+  initialValue: T
+): [T, (value: T) => void] => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       const item = window.localStorage.getItem(key);
@@ -10,13 +13,10 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
       return initialValue;
     }
   });
-  const setValue = (value: T | Function) => {
+  const setValue = (value: T) => {
     try {
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-
-      setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      setStoredValue(value);
+      window.localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
       new ErrorEvent(
         "localStorage not aviable in this moment or not found a element"
