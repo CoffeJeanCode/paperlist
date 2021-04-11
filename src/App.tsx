@@ -43,6 +43,7 @@ function App() {
         onSortEnd={({ oldIndex, newIndex }) => {
           setTasks(arrayMove(tasks, oldIndex, newIndex));
         }}
+        useDragHandle
       />
     </main>
   );

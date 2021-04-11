@@ -1,5 +1,9 @@
-import React, { FC } from "react";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import React from "react";
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+} from "react-sortable-hoc";
 import { useTasksContext } from "../store";
 import { Task } from "../types";
 
@@ -22,6 +26,7 @@ const TaskItem = SortableElement(({ task }: TaskItemProps) => {
   const { handleUpdateTask, handleDeleteTask } = useTasksContext();
   return (
     <li className="task__item" key={task.id}>
+      <DragHandler />
       <label htmlFor={`task-${task.id}`} className="paper-check">
         <input
           type="checkbox"
@@ -40,5 +45,7 @@ const TaskItem = SortableElement(({ task }: TaskItemProps) => {
     </li>
   );
 });
+
+const DragHandler = SortableHandle(() => <span className="handler">: :</span>);
 
 export default TasksList;

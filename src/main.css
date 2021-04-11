@@ -21,7 +21,9 @@ h2 {
 h3 {
   font-size: 32px;
 }
-
+.handler {
+  cursor: move;
+}
 .container {
   max-width: 600px;
 }
@@ -65,9 +67,10 @@ h3 {
   width: 100%;
   max-width: 400px;
   margin: auto;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 0.2fr 1fr 0.2fr;
   align-items: center;
+  background-color: white;
 }
 
 .task__item input {
