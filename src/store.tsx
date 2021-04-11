@@ -3,6 +3,7 @@ import React, {
   createContext,
   FC,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { useLocalStorage } from "./hooks/useLocalStorage";
@@ -40,10 +41,14 @@ export const TasksContextProvider: FC = ({ children }) => {
     id: "",
   });
 
+  useEffect(() => {
+    setCompleted(tasks.filter((task) => task.isDone).length);
+  }, [tasks]);
+
   const handleAddTask = () => {
     if (!newTask.title) return;
 
-    setTasks([...tasks, { ...newTask, id: createId() }]);
+    setTasks([{ ...newTask, id: createId() }, ...tasks]);
     setNewTask({ title: "", id: "", isDone: false });
   };
 
@@ -61,7 +66,6 @@ export const TasksContextProvider: FC = ({ children }) => {
       task.id === id ? { ...task, isDone: !task.isDone } : task
     );
     setTasks(newTasks);
-    setCompleted(tasks.filter((task) => task.isDone).length);
   };
 
   return (
