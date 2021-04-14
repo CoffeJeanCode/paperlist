@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {
   SortableContainer,
   SortableElement,
@@ -8,10 +8,10 @@ import { useTasksContext } from "../store";
 import { Task } from "../types";
 
 const TasksList = SortableContainer(() => {
-  const { tasks } = useTasksContext();
+  const { tasks, mappingTasks } = useTasksContext();
   return (
     <ul className="tasks__container">
-      {tasks.map((task, index) => (
+      {mappingTasks((task, index) => (
         <TaskItem key={task.id} index={index} task={task} />
       ))}
     </ul>
@@ -24,6 +24,7 @@ type TaskItemProps = {
 
 const TaskItem = SortableElement(({ task }: TaskItemProps) => {
   const { handleUpdateTask, handleDeleteTask } = useTasksContext();
+
   return (
     <li className="task__item" key={task.id}>
       <DragHandler />
@@ -48,4 +49,4 @@ const TaskItem = SortableElement(({ task }: TaskItemProps) => {
 
 const DragHandler = SortableHandle(() => <span className="handler">: :</span>);
 
-export default TasksList;
+export default memo(TasksList);

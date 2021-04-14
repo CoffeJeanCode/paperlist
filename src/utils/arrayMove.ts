@@ -6,6 +6,7 @@ export const arrayMove = <T>(array: T[], from: number, to: number) => {
     const endIndex = to < 0 ? newArray.length + to : to;
 
     const [item] = newArray.splice(from, 1);
+
     newArray.splice(endIndex, 0, item);
   }
 

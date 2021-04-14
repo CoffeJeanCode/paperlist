@@ -2,6 +2,7 @@ import React, {
   ChangeEvent,
   createContext,
   FC,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -9,12 +10,17 @@ import React, {
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { Task } from "./types";
 import { createId } from "./utils/createId";
+import { getIds } from "./utils/getter";
+import { toMap } from "./utils/toMap";
 
 type TasksContextType = {
   handleUpdateTask: (id: string) => () => void;
   handleDeleteTask: (id: string) => () => void;
   handleNewTask: (evt: ChangeEvent<HTMLInputElement>) => void;
   handleAddTask: () => void;
+  mappingTasks: (
+    mapper: (task: Task, index: number) => JSX.Element
+  ) => JSX.Element[];
   setTasks: (value: Task[]) => void;
   newTask: Task;
   tasks: Task[];
@@ -27,6 +33,7 @@ const TasksContext = createContext<TasksContextType>({
   handleAddTask: () => {},
   handleNewTask: (evt: ChangeEvent<HTMLInputElement>) => {},
   setTasks: (value: Task[]) => {},
+  mappingTasks: (mapper) => [<></>],
   newTask: { title: "", id: "", isDone: false },
   tasks: [],
   completed: 0,
@@ -45,12 +52,12 @@ export const TasksContextProvider: FC = ({ children }) => {
     setCompleted(tasks.filter((task) => task.isDone).length);
   }, [tasks]);
 
-  const handleAddTask = () => {
+  const handleAddTask = useCallback(() => {
     if (!newTask.title) return;
 
     setTasks([{ ...newTask, id: createId() }, ...tasks]);
     setNewTask({ title: "", id: "", isDone: false });
-  };
+  }, [newTask]);
 
   const handleNewTask = (evt: ChangeEvent<HTMLInputElement>) => {
     setNewTask({ ...newTask, title: evt.target.value });
@@ -68,6 +75,12 @@ export const TasksContextProvider: FC = ({ children }) => {
     setTasks(newTasks);
   };
 
+  const mappingTasks = (mapper: (task: Task, index: number) => JSX.Element) => {
+    const taskIds = getIds(tasks);
+    const mapTasks = toMap(tasks, "id");
+    return taskIds.map((id, index) => mapper(mapTasks.get(id), index));
+  };
+
   return (
     <TasksContext.Provider
       value={{
@@ -75,6 +88,7 @@ export const TasksContextProvider: FC = ({ children }) => {
         handleDeleteTask,
         handleAddTask,
         handleNewTask,
+        mappingTasks,
         setTasks,
         newTask,
         tasks,

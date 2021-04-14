@@ -1,5 +1,6 @@
 export const createId = () => {
   let date = new Date().getTime();
+
   const replaceRandom = (str: string) => {
     const random = (date + Math.random() * 16) % 16 | 0;
     date = Math.floor(date / 16);
