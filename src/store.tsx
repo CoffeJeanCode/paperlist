@@ -18,6 +18,7 @@ type TasksContextType = {
   handleDeleteTask: (id: string) => () => void;
   handleNewTask: (evt: ChangeEvent<HTMLInputElement>) => void;
   handleAddTask: () => void;
+  undo: () => void;
   mappingTasks: (
     mapper: (task: Task, index: number) => JSX.Element
   ) => JSX.Element[];
@@ -33,6 +34,7 @@ const TasksContext = createContext<TasksContextType>({
   handleAddTask: () => {},
   handleNewTask: (evt: ChangeEvent<HTMLInputElement>) => {},
   setTasks: (value: Task[]) => {},
+  undo: () => {},
   mappingTasks: (mapper) => [<></>],
   newTask: { title: "", id: "", isDone: false },
   tasks: [],
@@ -40,7 +42,7 @@ const TasksContext = createContext<TasksContextType>({
 });
 
 export const TasksContextProvider: FC = ({ children }) => {
-  const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", []);
+  const [tasks, setTasks, undo] = useLocalStorage<Task[]>("tasks", []);
   const [completed, setCompleted] = useState(0);
   const [newTask, setNewTask] = useState<Task>({
     title: "",
@@ -90,6 +92,7 @@ export const TasksContextProvider: FC = ({ children }) => {
         handleNewTask,
         mappingTasks,
         setTasks,
+        undo,
         newTask,
         tasks,
         completed,

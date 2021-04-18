@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useUndoState } from "./useUndoState";
 
 export const useLocalStorage = <T>(
   key: string,
   initialValue: T
-): [T, (value: T) => void] => {
-  const [storedValue, setStoredValue] = useState(() => {
+): [T, (value: T) => void, () => void] => {
+  const [storedValue, setStoredValue, undo] = useUndoState(() => {
     try {
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
@@ -23,5 +23,5 @@ export const useLocalStorage = <T>(
       );
     }
   };
-  return [storedValue, setValue];
+  return [storedValue, setValue, undo];
 };

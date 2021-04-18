@@ -91,3 +91,10 @@ h3 {
   content: "";
   display: none;
 }
+
+.timer__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  tranfo
+}

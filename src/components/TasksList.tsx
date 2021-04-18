@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import {
   SortableContainer,
   SortableElement,
@@ -8,7 +8,21 @@ import { useTasksContext } from "../store";
 import { Task } from "../types";
 
 const TasksList = SortableContainer(() => {
-  const { tasks, mappingTasks } = useTasksContext();
+  const { undo, mappingTasks } = useTasksContext();
+
+  useEffect(() => {
+    const handleUndo = (evt: KeyboardEvent) => {
+      if (evt.ctrlKey && evt.key === "z") {
+        undo();
+      }
+    };
+
+    document.addEventListener("keyup", handleUndo);
+    return () => {
+      document.removeEventListener("keyup", handleUndo);
+    };
+  }, []);
+
   return (
     <ul className="tasks__container">
       {mappingTasks((task, index) => (

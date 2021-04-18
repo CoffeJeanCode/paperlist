@@ -45,6 +45,8 @@ function App() {
         }}
         useDragHandle
       />
+
+      {/* <Timer /> */}
     </main>
   );
 }

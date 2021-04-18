@@ -7,10 +7,12 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "howl": "^0.2.0",
     "papercss": "^1.8.2",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-sortable-hoc": "^2.0.0"
+    "react-sortable-hoc": "^2.0.0",
+    "use-sound": "^2.0.1"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
