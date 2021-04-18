@@ -1,3 +1,3 @@
-import { pluck } from "../lib/fp";
+import { pluck } from "ramda";
 
 export const getIds = pluck("id");
